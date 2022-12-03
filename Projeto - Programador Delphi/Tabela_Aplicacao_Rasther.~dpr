@@ -2,8 +2,7 @@ program Tabela_Aplicacao_Rasther;
 
 uses
   Forms,
-  MainUnit in 'MainUnit.pas' {MainForm},
-  uLkJSON in 'C:\Users\Felipe\Downloads\lkJSON-1.07\uLkJSON.pas';
+  MainUnit in 'MainUnit.pas' {MainForm};
 
 {$R *.res}
 

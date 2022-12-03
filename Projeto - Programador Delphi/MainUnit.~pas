@@ -4,17 +4,17 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, System.JSON, StdCtrls, IdBaseComponent, IdComponent,
-  IdTCPConnection, IdTCPClient, IdHTTP;
+  Dialogs, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
+  IdHTTP, StdCtrls, Menus, uLkJSON;
 
 type
-  TForm1 = class(TForm)
-    idhtp1: TIdHTTP;
-    lbl1: TLabel;
-    lst1: TListBox;
-    mmo1: TMemo;
+  TMainForm = class(TForm)
     btn1: TButton;
-    edt1: TEdit;
+    idhtp1: TIdHTTP;
+    cbb1: TComboBox;
+    lbl1: TLabel;
+    procedure btn1Click(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -22,10 +22,43 @@ type
   end;
 
 var
-  Form1: TForm1;
+  MainForm: TMainForm;
 
 implementation
 
 {$R *.dfm}
+
+procedure TMainForm.btn1Click(Sender: TObject);
+var JSONRest : String;
+    objJSON, Item: TlkJSONbase;
+    i : Integer;
+begin
+  JSONRest := idhtp1.Get('http://service.tecnomotor.com.br/iRasther/tipo?pm.platform=1&pm.version=23');
+  objJSON := TlkJSON.ParseText(JSONRest);
+
+  for i :=0 to objJSON.Count-1 do
+  begin
+    Item := objJSON.Child[i];
+    cbb1.Items.Add(Item.Value);
+  end;
+
+end;
+
+procedure GETCategoria();
+var JSONRest : String;
+    objJSON, Item: TlkJSONbase;
+    i : Integer;
+begin
+
+  JSONRest := idhtp1.Get('http://service.tecnomotor.com.br/iRasther/tipo?pm.platform=1&pm.version=23');
+  objJSON := TlkJSON.ParseText(JSONRest);
+
+  for i :=0 to objJSON.Count-1 do
+  begin
+    Item := objJSON.Child[i];
+    cbb1.Items.Add(Item.Value);
+  end;
+
+end;
 
 end.
