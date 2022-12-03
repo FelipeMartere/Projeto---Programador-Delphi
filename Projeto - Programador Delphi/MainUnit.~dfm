@@ -1,8 +1,8 @@
 object MainForm: TMainForm
-  Left = 2057
-  Top = 222
+  Left = 1973
+  Top = 58
   Width = 1305
-  Height = 675
+  Height = 728
   Caption = 'Tabela de Aplica'#231#227'o Rasther'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +11,7 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lbl1: TLabel
@@ -43,6 +44,15 @@ object MainForm: TMainForm
     ItemHeight = 13
     MaxLength = 50
     TabOrder = 1
+  end
+  object mmo1: TMemo
+    Left = 504
+    Top = 136
+    Width = 257
+    Height = 449
+    Lines.Strings = (
+      'mmo1')
+    TabOrder = 2
   end
   object idhtp1: TIdHTTP
     MaxLineAction = maException

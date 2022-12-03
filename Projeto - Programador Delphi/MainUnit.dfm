@@ -1,8 +1,8 @@
 object MainForm: TMainForm
-  Left = 2057
-  Top = 222
+  Left = 1973
+  Top = 58
   Width = 1305
-  Height = 675
+  Height = 728
   Caption = 'Tabela de Aplica'#231#227'o Rasther'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -27,6 +27,19 @@ object MainForm: TMainForm
     Font.Style = []
     ParentFont = False
   end
+  object lbl2: TLabel
+    Left = 608
+    Top = 96
+    Width = 99
+    Height = 24
+    Caption = 'Montadoras'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
   object btn1: TButton
     Left = 256
     Top = 184
@@ -44,6 +57,14 @@ object MainForm: TMainForm
     ItemHeight = 13
     MaxLength = 50
     TabOrder = 1
+  end
+  object lst1: TListBox
+    Left = 608
+    Top = 128
+    Width = 233
+    Height = 281
+    ItemHeight = 13
+    TabOrder = 2
   end
   object idhtp1: TIdHTTP
     MaxLineAction = maException

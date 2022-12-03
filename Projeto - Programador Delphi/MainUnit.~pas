@@ -13,7 +13,10 @@ type
     idhtp1: TIdHTTP;
     cbb1: TComboBox;
     lbl1: TLabel;
+    mmo1: TMemo;
     procedure btn1Click(Sender: TObject);
+    procedure GETCategoria();
+    procedure FormShow(Sender: TObject);
 
   private
     { Private declarations }
@@ -29,36 +32,57 @@ implementation
 {$R *.dfm}
 
 procedure TMainForm.btn1Click(Sender: TObject);
+var categoria, url, jsonGet : String;
+    objJSONMontadoras, ItemsMontadora, nomeMontadora: TlkJSONbase;
+
+    i,j : Integer;
+begin
+  url := 'http://service.tecnomotor.com.br/iRasther/montadora?pm.platform=1&pm.version=23&pm.type=LEVES';
+  categoria := cbb1.text;
+
+  jsonGet := idhtp1.Get(url);
+  objJSONMontadoras := TlkJSON.ParseText(jsonGet);
+
+
+
+
+  for i :=0 to objJSONMontadoras.Count -1 do
+  begin
+    ItemsMontadora := objJSONMontadoras.Child[i];
+    //mmo1.Lines.Add(VarToStr(ItemsMontadora.Value));
+
+    nomeMontadora := ItemsMontadora.Field['nome'];
+    mmo1.Lines.Add(VarToStr(nomeMontadora.Value));
+
+
+
+  end;
+
+
+end;
+
+procedure TMainForm.GETCategoria();
 var JSONRest : String;
-    objJSON, Item: TlkJSONbase;
+    objJSON, Items, Item: TlkJSONbase;
     i : Integer;
 begin
+
   JSONRest := idhtp1.Get('http://service.tecnomotor.com.br/iRasther/tipo?pm.platform=1&pm.version=23');
   objJSON := TlkJSON.ParseText(JSONRest);
 
   for i :=0 to objJSON.Count-1 do
   begin
-    Item := objJSON.Child[i];
-    cbb1.Items.Add(Item.Value);
+    Item := objJSON.Child[0];
+    Items := objJSON.Child[i];
+    cbb1.Items.Add(Items.Value);
+    cbb1.Text := VarToStr(Item.Value);
   end;
 
 end;
 
-procedure GETCategoria();
-var JSONRest : String;
-    objJSON, Item: TlkJSONbase;
-    i : Integer;
+procedure TMainForm.FormShow(Sender: TObject);
 begin
-
-  JSONRest := idhtp1.Get('http://service.tecnomotor.com.br/iRasther/tipo?pm.platform=1&pm.version=23');
-  objJSON := TlkJSON.ParseText(JSONRest);
-
-  for i :=0 to objJSON.Count-1 do
-  begin
-    Item := objJSON.Child[i];
-    cbb1.Items.Add(Item.Value);
-  end;
-
+  GETCategoria();
 end;
 
 end.
