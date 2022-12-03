@@ -65,6 +65,15 @@ object MainForm: TMainForm
     Height = 281
     ItemHeight = 13
     TabOrder = 2
+    OnClick = lst1Click
+  end
+  object pnl1: TPanel
+    Left = 208
+    Top = 312
+    Width = 185
+    Height = 41
+    Caption = 'pnl1'
+    TabOrder = 3
   end
   object idhtp1: TIdHTTP
     MaxLineAction = maException

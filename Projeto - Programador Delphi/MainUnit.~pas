@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-  IdHTTP, StdCtrls, Menus, uLkJSON;
+  IdHTTP, StdCtrls, Menus, uLkJSON, ComCtrls;
 
 type
   TMainForm = class(TForm)
@@ -13,9 +13,11 @@ type
     idhtp1: TIdHTTP;
     cbb1: TComboBox;
     lbl1: TLabel;
-    mmo1: TMemo;
+    lbl2: TLabel;
+    lst1: TListBox;
     procedure btn1Click(Sender: TObject);
     procedure GETCategoria();
+    procedure GETMontadoras();
     procedure FormShow(Sender: TObject);
 
   private
@@ -32,33 +34,8 @@ implementation
 {$R *.dfm}
 
 procedure TMainForm.btn1Click(Sender: TObject);
-var categoria, url, jsonGet : String;
-    objJSONMontadoras, ItemsMontadora, nomeMontadora: TlkJSONbase;
-
-    i,j : Integer;
 begin
-  url := 'http://service.tecnomotor.com.br/iRasther/montadora?pm.platform=1&pm.version=23&pm.type=LEVES';
-  categoria := cbb1.text;
-
-  jsonGet := idhtp1.Get(url);
-  objJSONMontadoras := TlkJSON.ParseText(jsonGet);
-
-
-
-
-  for i :=0 to objJSONMontadoras.Count -1 do
-  begin
-    ItemsMontadora := objJSONMontadoras.Child[i];
-    //mmo1.Lines.Add(VarToStr(ItemsMontadora.Value));
-
-    nomeMontadora := ItemsMontadora.Field['nome'];
-    mmo1.Lines.Add(VarToStr(nomeMontadora.Value));
-
-
-
-  end;
-
-
+   GETMontadoras();
 end;
 
 procedure TMainForm.GETCategoria();
@@ -77,6 +54,28 @@ begin
     cbb1.Items.Add(Items.Value);
     cbb1.Text := VarToStr(Item.Value);
   end;
+
+end;
+
+procedure TMainForm.GETMontadoras();
+var categoria, url, jsonGet : String;
+    objJSONMontadoras, ItemsMontadora, nomeMontadora: TlkJSONbase;
+    i,j : Integer;
+begin
+  lst1.Clear;
+  url := 'http://service.tecnomotor.com.br/iRasther/montadora?pm.platform=1&pm.version=23&pm.type=';
+  categoria := cbb1.text;
+
+  jsonGet := idhtp1.Get(url+categoria);
+  objJSONMontadoras := TlkJSON.ParseText(jsonGet);
+
+  for i :=0 to objJSONMontadoras.Count -1 do
+  begin
+    ItemsMontadora := objJSONMontadoras.Child[i];
+    nomeMontadora := ItemsMontadora.Field['nome'];
+    lst1.Items.Add(nomeMontadora.Value);
+  end;
+
 
 end;
 
