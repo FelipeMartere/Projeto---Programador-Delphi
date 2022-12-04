@@ -138,6 +138,14 @@ object MainForm: TMainForm
     TabOrder = 7
     OnClick = btn2Click
   end
+  object pnl3: TPanel
+    Left = 752
+    Top = 40
+    Width = 185
+    Height = 41
+    Caption = 'pnl3'
+    TabOrder = 8
+  end
   object idhtp1: TIdHTTP
     MaxLineAction = maException
     ReadTimeout = 0

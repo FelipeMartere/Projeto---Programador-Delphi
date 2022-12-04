@@ -53,6 +53,7 @@ object MainForm: TMainForm
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    Visible = False
   end
   object btn1: TButton
     Left = 128
@@ -96,6 +97,7 @@ object MainForm: TMainForm
     Height = 497
     ItemHeight = 13
     TabOrder = 4
+    Visible = False
   end
   object pnl2: TPanel
     Left = 536
