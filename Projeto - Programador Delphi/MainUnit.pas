@@ -26,6 +26,7 @@ type
     dbgrd1: TDBGrid;
     dataSource1: TDataSource;
     btn2: TButton;
+    pnl3: TPanel;
     procedure btn1Click(Sender: TObject);
     procedure GETCategoria();
     procedure GETMontadoras();
@@ -119,29 +120,18 @@ begin
      }
       //dbgrd1.Columns[0].FieldName := 'Id';
       //dbgrd1.Columns[1].FieldName := 'Nome';
-      ListaIdMontadora.Add(VarToStr(idMontadora.Value));
+
+      ListaIdMontadora.Add(VarToStr(nomeMontadora.Value));
 
       if (j >= i) then
       begin
-         ListaIdMontadora.Add(VarToStr(nomeMontadora.Value));
+         ListaIdMontadora.Add(VarToStr(idMontadora.Value));
       end;
 
         j := j+1;
   end;
 
-
-   {
-   lst1.Columns := 2;
-  for i :=0 to objJSONMontadoras.Count -1 do
-  begin
-    ItemsMontadora := objJSONMontadoras.Child[i];
-    idMontadora := ItemsMontadora.Field['Id'];
-    lst1.Items.Add(idMontadora.Value);
-  end;
-  }
-
-
-end;
+end;     
 
 procedure TMainForm.GETVeiculos();
 var categoria, url, jsonGet, idVeiculo : String;
@@ -194,15 +184,24 @@ var i: Integer;
 begin
 
     //GETVeiculos();
-  
-  for i:= 0 to lst1.items.count -1 do
+  j := i+1;
+  for i:= 0 to lst1.Count-1 do
   begin
 
     if(lst1.Items.Strings[i] <> '' )then
     begin
       pnl1.Caption := lst1.Items.Strings[lst1.ItemIndex];
+      pnl2.Caption := IntToStr(ListaIdMontadora.IndexOf(lst1.Items.Strings[lst1.ItemIndex]));
+      pnl3.Caption := ListaIdMontadora[ListaIdMontadora.IndexOf(lst1.Items.Strings[lst1.ItemIndex])+1];
+       //pnl1.Caption := ListaIdMontadora[lst1.ItemIndex];
+      //pnl1.Caption := IntToStr(ListaIdMontadora.IndexOf(IntToStr(ListaIdMontadora.IndexOf(lst1.Items.Strings[lst1.ItemIndex]))));
       lst1.Repaint;
+
     end;
+
+    //ListaIdMontadora.Add(VarToStr(nomeMontadora.Value));
+
+
   end
 
 end;
@@ -230,10 +229,15 @@ begin
      ds2.FieldByName('Nome').AsString := nomeMontadora.Value;
      ds2.Post;
       }
-      for j :=0 to ListaIdMontadora.Count -1 do
+
+      {
+      for j :=0 to ListaIdMontadora.Count -1  do
       begin
+
          ShowMessage(ListaIdMontadora.Strings[j]);
       end;
+       }
+        ShowMessage(IntToStr(ListaIdMontadora.IndexOf('VW')));
 
 
 end;
