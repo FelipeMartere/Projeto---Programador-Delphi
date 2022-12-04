@@ -11,6 +11,7 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -95,7 +96,6 @@ object MainForm: TMainForm
     Height = 497
     ItemHeight = 13
     TabOrder = 4
-    OnClick = lst1Click
   end
   object pnl2: TPanel
     Left = 536
@@ -104,6 +104,39 @@ object MainForm: TMainForm
     Height = 41
     Caption = 'pnl2'
     TabOrder = 5
+  end
+  object dbgrd1: TDBGrid
+    Left = 680
+    Top = 216
+    Width = 320
+    Height = 120
+    DataSource = dataSource1
+    TabOrder = 6
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        Width = 155
+        Visible = True
+      end
+      item
+        Expanded = False
+        Width = 237
+        Visible = True
+      end>
+  end
+  object btn2: TButton
+    Left = 736
+    Top = 360
+    Width = 75
+    Height = 25
+    Caption = 'Enviar Tabela'
+    TabOrder = 7
+    OnClick = btn2Click
   end
   object idhtp1: TIdHTTP
     MaxLineAction = maException
@@ -121,5 +154,24 @@ object MainForm: TMainForm
     HTTPOptions = [hoForceEncodeParams]
     Left = 16
     Top = 8
+  end
+  object ds2: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 672
+    Top = 104
+    object ds2ID: TStringField
+      FieldName = 'ID'
+      Size = 10
+    end
+    object ds2Nome: TStringField
+      FieldName = 'Nome'
+      Size = 50
+    end
+  end
+  object dataSource1: TDataSource
+    DataSet = ds2
+    Left = 728
+    Top = 112
   end
 end

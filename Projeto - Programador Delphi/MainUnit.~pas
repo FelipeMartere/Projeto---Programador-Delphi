@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-  IdHTTP, StdCtrls, Menus, uLkJSON, ComCtrls, ExtCtrls, JSONObject;
+  IdHTTP, StdCtrls, Menus, uLkJSON, ComCtrls, ExtCtrls, JSONObject, Grids,
+  ValEdit, DBGrids, DB, DBTables, DBCtrls, DBClient;
 
 type
   TMainForm = class(TForm)
@@ -19,6 +20,10 @@ type
     lst2: TListBox;
     lbl3: TLabel;
     pnl2: TPanel;
+    ds2: TClientDataSet;
+    ds2ID: TStringField;
+    ds2Nome: TStringField;
+    dbgrd1: TDBGrid;
     procedure btn1Click(Sender: TObject);
     procedure GETCategoria();
     procedure GETMontadoras();
@@ -31,6 +36,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+      procedure  SetCategoria(url : String);
+
   end;
 
 var
@@ -46,10 +53,11 @@ begin
 end;
 
 procedure TMainForm.GETCategoria();
-var JSONRest, Categoria : String;
+
+var  JSONRest : string;
+    JsonObject : UJSONObject;
     objJSON, Items, Item: TlkJSONbase;
     i : Integer;
-    JsonObject : UJSONObject;
 begin
 
    JsonObject := UJSONObject.Create;
@@ -65,11 +73,14 @@ begin
     cbb1.Text := VarToStr(Item.Value);
   end;
 
+  //JsonObject := UJSONObject.Create;
+   //JsonObject.GetCategoria();
+
 end;
 
 procedure TMainForm.GETMontadoras();
-var categoria, url, jsonGet : String;
-    objJSONMontadoras, ItemsMontadora, nomeMontadora: TlkJSONbase;
+var categoria, url, jsonGet: String;
+    objJSONMontadoras, ItemsMontadora, nomeMontadora, idMontadora: TlkJSONbase;
     i,j : Integer;
 begin
   lst1.Clear;
@@ -79,14 +90,38 @@ begin
   jsonGet := idhtp1.Get(url+categoria);
   objJSONMontadoras := TlkJSON.ParseText(jsonGet);
 
+
+  for i :=0 to objJSONMontadoras.Count -1 do
+  begin
+
+    ItemsMontadora := objJSONMontadoras.Child[i];
+    nomeMontadora := ItemsMontadora.Field['nome'];
+    idMontadora := ItemsMontadora.Field['id'];
+    lst1.Items.Add(nomeMontadora.Value);
+    //lst2.Items.Add(idMontadora.Value);
+
+    //lst1.Items[i] := lst2.Items[i];
+     //ShowMessage(lst1.Items[i]);
+     {
+     ds2.Append;
+     ds2.FieldByName('ID').AsString := idMontadora.Value;
+     ds2.FieldByName('Nome').AsString := nomeMontadora.Value;
+     ds2.Post;
+      }
+      dbgrd1.Columns[0].FieldName := 'Id';
+      dbgrd1.Columns[1].FieldName := 'Nome';
+
+  end;
+
+   {
+   lst1.Columns := 2;
   for i :=0 to objJSONMontadoras.Count -1 do
   begin
     ItemsMontadora := objJSONMontadoras.Child[i];
-    nomeMontadora := ItemsMontadora.Field['nome'];
-    lst1.Items.Add(nomeMontadora.Value);
-
-
+    idMontadora := ItemsMontadora.Field['Id'];
+    lst1.Items.Add(idMontadora.Value);
   end;
+  }
 
 
 end;
@@ -127,8 +162,13 @@ begin
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
+var
+  JsonObject : UJSONObject;
 begin
+  //SetCategoria('http://service.tecnomotor.com.br/iRasther/tipo?pm.platform=1&pm.version=23');
   GETCategoria();
+  //JsonObject := UJSONObject.Create;
+   //JsonObject.GetCategoria();
 end;
 
 procedure TMainForm.lst1Click(Sender: TObject);
@@ -147,6 +187,21 @@ begin
       lst1.Repaint;
     end;
   end
+
+end;
+
+procedure TMainForm.SetCategoria(url: String);
+var
+  JsonObject : UJSONObject;
+  objJSON, Items, Item: TlkJSONbase;
+  JSONRest, Categoria : String;
+begin
+
+  JsonObject := UJSONObject.Create;
+  JSONRest := idhtp1.Get(url);
+  objJSON := TlkJSON.ParseText(JSONRest);
+  JsonObject.categoria := objJSON;
+
 
 end;
 
