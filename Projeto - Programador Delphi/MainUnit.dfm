@@ -1,8 +1,8 @@
 object MainForm: TMainForm
-  Left = 1973
-  Top = 58
-  Width = 1305
-  Height = 728
+  Left = 1940
+  Top = 81
+  Width = 1278
+  Height = 718
   Caption = 'i'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -72,9 +72,23 @@ object MainForm: TMainForm
   object lbl5: TLabel
     Left = 744
     Top = 128
-    Width = 75
+    Width = 154
     Height = 24
-    Caption = 'Sistemas'
+    Caption = 'Tipos de Sistemas'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object lbl6: TLabel
+    Left = 992
+    Top = 128
+    Width = 80
+    Height = 24
+    Caption = ' Sistemas'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -19
@@ -153,6 +167,7 @@ object MainForm: TMainForm
     Columns = <
       item
         Caption = 'ID'
+        Width = 0
       end
       item
         Width = 225
@@ -172,6 +187,7 @@ object MainForm: TMainForm
     Columns = <
       item
         Caption = 'ID'
+        Width = 0
       end
       item
         Width = 225
@@ -183,7 +199,7 @@ object MainForm: TMainForm
     Visible = False
     OnSelectItem = lvMotorizacaoSelectItem
   end
-  object lvSistemas: TListView
+  object lvTipoSistemas: TListView
     Left = 744
     Top = 160
     Width = 225
@@ -191,6 +207,7 @@ object MainForm: TMainForm
     Columns = <
       item
         Caption = 'ID'
+        Width = 0
       end
       item
         Width = 225
@@ -198,6 +215,26 @@ object MainForm: TMainForm
     ColumnClick = False
     RowSelect = True
     TabOrder = 8
+    ViewStyle = vsReport
+    Visible = False
+    OnSelectItem = lvTipoSistemasSelectItem
+  end
+  object lvSistemas: TListView
+    Left = 992
+    Top = 158
+    Width = 225
+    Height = 513
+    Columns = <
+      item
+        Caption = 'ID'
+        Width = 0
+      end
+      item
+        Width = 225
+      end>
+    ColumnClick = False
+    RowSelect = True
+    TabOrder = 9
     ViewStyle = vsReport
     Visible = False
   end

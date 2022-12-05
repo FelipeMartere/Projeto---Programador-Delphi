@@ -23,7 +23,7 @@ type
     lvVeiculos: TListView;
     lvMotorizacao: TListView;
     lbl4: TLabel;
-    lvSistemas: TListView;
+    lvTipoSistemas: TListView;
     lbl5: TLabel;
     procedure btn1Click(Sender: TObject);
     procedure GETCategoria();
@@ -266,7 +266,7 @@ procedure TMainForm.lvVeiculosSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
   var
     i: Integer;
-     url, categoria, jsonGet, indexVeiculo, idVeiculoString : String;
+     url, categoria, jsonGet, indexVeiculo : String;
     objJSONMotorizacao, ItemsMotorizacao, nomeMotorizacao, idMotorizacao: TlkJSONbase;
     ListaMotorizacao : TListItem;
 begin
@@ -306,7 +306,7 @@ begin
   lvMontadoras.Clear;
   lvVeiculos.Clear;
   lvMotorizacao.Clear;
-  lvSistemas.Clear;
+  lvTipoSistemas.Clear;
   GETMontadoras();
   //ShowMessage(cbb1.Text);
 end;
@@ -314,35 +314,40 @@ end;
 procedure TMainForm.lvMotorizacaoSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
   var
-  i: Integer;
-     url, categoria, jsonGet, indexVeiculo, idVeiculoString : String;
-    objJSONSistemas, ItemsSistemas, nomeSistema, idSistemas: TlkJSONbase;
-    ListaSistemas : TListItem;
+    i: Integer;
+     url, categoria, jsonGet, indexVeiculo : String;
+    objJSONTipoSistemas, ItemsTipoSistemas, nomeTipoSistema, idTipoSistemas: TlkJSONbase;
+    ListaTipoSistemas : TListItem;
 begin
   idMotorizacaoString := Item.Caption;
   pnl1.Caption := idMotorizacaoString;
 
     lbl5.Visible := True;
-    lvSistemas.Visible := True;
+    lvTipoSistemas.Visible := True;
     categoria := cbb1.text;
-    lvSistemas.Clear;
-    url := 'http://service.tecnomotor.com.br/iRasther/tiposistema?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+IdMontadoraNovo+'&pm.vehicles='+idVeiculoString+'&pm.engines=22';
+    lvTipoSistemas.Clear;
+
+    url := 'http://service.tecnomotor.com.br/iRasther/tiposistema?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+IdMontadoraNovo+'&pm.vehicles='+idVeiculoString+'&pm.engines='+idMotorizacaoString;
 
     jsonGet := idhtp1.Get(url);
-    objJSONSistemas := TlkJSON.ParseText(jsonGet);
+    objJSONTipoSistemas := TlkJSON.ParseText(jsonGet);
 
-    for i :=0 to objJSONSistemas.Count -1 do
+    for i :=0 to objJSONTipoSistemas.Count -1 do
     begin
 
-      ItemsSistemas := objJSONSistemas.Child[i];
-      nomeSistema := ItemsSistemas.Field['nome'];
-      idSistemas := ItemsSistemas.Field['id'];
-      ListaSistemas := lvSistemas.Items.Add;
-      ListaSistemas.Caption := idSistemas.Value;
-      ListaSistemas.SubItems.Add(nomeSistema.Value);
+      ItemsTipoSistemas := objJSONTipoSistemas.Child[i];
+      nomeTipoSistema := ItemsTipoSistemas.Field['nome'];
+      idTipoSistemas := ItemsTipoSistemas.Field['id'];
+
+      ListaTipoSistemas := lvTipoSistemas.Items.Add;
+      ListaTipoSistemas.Caption := idTipoSistemas.Value;
+      ListaTipoSistemas.SubItems.Add(nomeTipoSistema.Value);
 
     end;
-     ShowMessage(url);
+
+     //ShowMessage(url);
+
 end;
 
 end.
+
