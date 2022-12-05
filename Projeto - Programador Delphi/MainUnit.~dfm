@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 58
   Width = 1305
   Height = 728
-  Caption = 'Tabela de Aplica'#231#227'o Rasther'
+  Caption = 'i'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -69,14 +69,19 @@ object MainForm: TMainForm
     ParentFont = False
     Visible = False
   end
-  object btn1: TButton
-    Left = 128
-    Top = 88
+  object lbl5: TLabel
+    Left = 744
+    Top = 128
     Width = 75
-    Height = 25
-    Caption = 'Enviar GET'
-    TabOrder = 0
-    OnClick = btn1Click
+    Height = 24
+    Caption = 'Sistemas'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
   end
   object cbb1: TComboBox
     Left = 72
@@ -85,16 +90,8 @@ object MainForm: TMainForm
     Height = 21
     ItemHeight = 13
     MaxLength = 50
-    TabOrder = 1
-  end
-  object lst1: TListBox
-    Left = 1040
-    Top = 168
-    Width = 233
-    Height = 497
-    ItemHeight = 13
-    TabOrder = 2
-    OnClick = lst1Click
+    TabOrder = 0
+    OnChange = cbb1Change
   end
   object pnl1: TPanel
     Left = 336
@@ -102,16 +99,7 @@ object MainForm: TMainForm
     Width = 185
     Height = 41
     Caption = 'pnl1'
-    TabOrder = 3
-  end
-  object lst2: TListBox
-    Left = 800
-    Top = 168
-    Width = 233
-    Height = 497
-    ItemHeight = 13
-    TabOrder = 4
-    Visible = False
+    TabOrder = 1
   end
   object pnl2: TPanel
     Left = 536
@@ -119,7 +107,7 @@ object MainForm: TMainForm
     Width = 185
     Height = 41
     Caption = 'pnl2'
-    TabOrder = 5
+    TabOrder = 2
   end
   object btn2: TButton
     Left = 1152
@@ -127,7 +115,7 @@ object MainForm: TMainForm
     Width = 75
     Height = 25
     Caption = 'Enviar Tabela'
-    TabOrder = 6
+    TabOrder = 3
     OnClick = btn2Click
   end
   object pnl3: TPanel
@@ -136,7 +124,7 @@ object MainForm: TMainForm
     Width = 185
     Height = 41
     Caption = 'pnl3'
-    TabOrder = 7
+    TabOrder = 4
   end
   object lvMontadoras: TListView
     Left = 8
@@ -153,7 +141,7 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 8
+    TabOrder = 5
     ViewStyle = vsReport
     OnSelectItem = lvMontadorasSelectItem
   end
@@ -171,7 +159,7 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 9
+    TabOrder = 6
     ViewStyle = vsReport
     Visible = False
     OnSelectItem = lvVeiculosSelectItem
@@ -190,7 +178,26 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 10
+    TabOrder = 7
+    ViewStyle = vsReport
+    Visible = False
+    OnSelectItem = lvMotorizacaoSelectItem
+  end
+  object lvSistemas: TListView
+    Left = 744
+    Top = 160
+    Width = 225
+    Height = 513
+    Columns = <
+      item
+        Caption = 'ID'
+      end
+      item
+        Width = 225
+      end>
+    ColumnClick = False
+    RowSelect = True
+    TabOrder = 8
     ViewStyle = vsReport
     Visible = False
   end

@@ -10,14 +10,11 @@ uses
 
 type
   TMainForm = class(TForm)
-    btn1: TButton;
     idhtp1: TIdHTTP;
     cbb1: TComboBox;
     lbl1: TLabel;
     lbl2: TLabel;
-    lst1: TListBox;
     pnl1: TPanel;
-    lst2: TListBox;
     lbl3: TLabel;
     pnl2: TPanel;
     btn2: TButton;
@@ -26,6 +23,8 @@ type
     lvVeiculos: TListView;
     lvMotorizacao: TListView;
     lbl4: TLabel;
+    lvSistemas: TListView;
+    lbl5: TLabel;
     procedure btn1Click(Sender: TObject);
     procedure GETCategoria();
     procedure GETMontadoras();
@@ -38,6 +37,9 @@ type
     procedure lvMontadorasSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure lvVeiculosSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    procedure cbb1Change(Sender: TObject);
+    procedure lvMotorizacaoSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
 
   private
@@ -54,15 +56,15 @@ var
   MainForm: TMainForm;
   i,j : Integer;
   ListaIdMontadora : TStringList;
-  IdMontadoraNovo, idVeiculoString : String;
+  IdMontadoraNovo, idVeiculoString, idMotorizacaoString, idSistemas : String;
 implementation
 
 {$R *.dfm}
 
 procedure TMainForm.btn1Click(Sender: TObject);
 begin
-   GETMontadoras();
-   lst2.Clear;
+   //GETMontadoras();
+
    end;
 
 procedure TMainForm.GETCategoria();
@@ -83,7 +85,7 @@ begin
     Item := JsonObject.categoria.Child[0];
     Items := JsonObject.categoria.Child[i];
     cbb1.Items.Add(Items.Value);
-    cbb1.Text := VarToStr(Item.Value);
+
   end;
 
 end;
@@ -119,7 +121,7 @@ var categoria, url, jsonGet, idVeiculo : String;
     objJSONMontadoras,objJSONVeiculo, ItemsMontadora, idListVeiculo: TlkJSONbase;
     i,j : Integer;
 begin
-  lst1.Clear;
+
   url := 'http://service.tecnomotor.com.br/iRasther/montadora?pm.platform=1&pm.version=23&pm.type=';
   categoria := cbb1.text;
 
@@ -153,10 +155,9 @@ procedure TMainForm.FormShow(Sender: TObject);
 var
   JsonObject : UJSONObject;
 begin
-  //SetCategoria('http://service.tecnomotor.com.br/iRasther/tipo?pm.platform=1&pm.version=23');
+
   GETCategoria();
-  //JsonObject := UJSONObject.Create;
-   //JsonObject.GetCategoria();
+
 end;
 
 procedure TMainForm.lst1Click(Sender: TObject);
@@ -257,7 +258,7 @@ procedure TMainForm.lvMontadorasSelectItem(Sender: TObject; Item: TListItem;
      indexteste : String;
 begin
   IdMontadoraNovo := Item.Caption;
-  pnl1.Caption := IdMontadoraNovo;
+  //pnl1.Caption := IdMontadoraNovo;
   lst1Click(Sender);
 end;
 
@@ -294,8 +295,54 @@ begin
 
     end;
 
-     //ShowMessage(url);
 
+
+end;
+
+
+procedure TMainForm.cbb1Change(Sender: TObject);
+begin
+
+  lvMontadoras.Clear;
+  lvVeiculos.Clear;
+  lvMotorizacao.Clear;
+  lvSistemas.Clear;
+  GETMontadoras();
+  //ShowMessage(cbb1.Text);
+end;
+
+procedure TMainForm.lvMotorizacaoSelectItem(Sender: TObject;
+  Item: TListItem; Selected: Boolean);
+  var
+  i: Integer;
+     url, categoria, jsonGet, indexVeiculo, idVeiculoString : String;
+    objJSONSistemas, ItemsSistemas, nomeSistema, idSistemas: TlkJSONbase;
+    ListaSistemas : TListItem;
+begin
+  idMotorizacaoString := Item.Caption;
+  pnl1.Caption := idMotorizacaoString;
+
+    lbl5.Visible := True;
+    lvSistemas.Visible := True;
+    categoria := cbb1.text;
+    lvSistemas.Clear;
+    url := 'http://service.tecnomotor.com.br/iRasther/tiposistema?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+IdMontadoraNovo+'&pm.vehicles='+idVeiculoString+'&pm.engines=22';
+
+    jsonGet := idhtp1.Get(url);
+    objJSONSistemas := TlkJSON.ParseText(jsonGet);
+
+    for i :=0 to objJSONSistemas.Count -1 do
+    begin
+
+      ItemsSistemas := objJSONSistemas.Child[i];
+      nomeSistema := ItemsSistemas.Field['nome'];
+      idSistemas := ItemsSistemas.Field['id'];
+      ListaSistemas := lvSistemas.Items.Add;
+      ListaSistemas.Caption := idSistemas.Value;
+      ListaSistemas.SubItems.Add(nomeSistema.Value);
+
+    end;
+     ShowMessage(url);
 end;
 
 end.
