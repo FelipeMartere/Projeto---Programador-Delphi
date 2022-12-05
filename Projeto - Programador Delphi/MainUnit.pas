@@ -14,11 +14,7 @@ type
     cbb1: TComboBox;
     lbl1: TLabel;
     lbl2: TLabel;
-    pnl1: TPanel;
     lbl3: TLabel;
-    pnl2: TPanel;
-    btn2: TButton;
-    pnl3: TPanel;
     lvMontadoras: TListView;
     lvVeiculos: TListView;
     lvMotorizacao: TListView;
@@ -27,14 +23,10 @@ type
     lbl5: TLabel;
     lvSistemas: TListView;
     lbl6: TLabel;
-    procedure btn1Click(Sender: TObject);
+    edt1: TEdit;
     procedure GETCategoria();
     procedure GETMontadoras();
-    procedure GETVeiculos();
-    //procedure SelecionaMontadora();
     procedure FormShow(Sender: TObject);
-    procedure lst1Click(Sender: TObject);
-    procedure btn2Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure lvMontadorasSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
@@ -45,6 +37,8 @@ type
       Selected: Boolean);
     procedure lvTipoSistemasSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure lvSistemasSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
 
   private
     { Private declarations }
@@ -52,7 +46,7 @@ type
 
   public
     { Public declarations }
-      procedure  SetCategoria(url : String);
+
 
   end;
 
@@ -60,23 +54,18 @@ var
   MainForm: TMainForm;
   i,j : Integer;
   ListaIdMontadora : TStringList;
-  IdMontadoraNovo, idVeiculoString, idMotorizacaoString, idTipoSistemasString : String;
+  IdMontadoraNovo, idVeiculoString, idMotorizacaoString, idTipoSistemasString, nomeMontadoraStatus, nomeVeiculoStatus, nomeMotorizacaoStatus, nomeTipoSistemasStatus, nomeSistemasStatus : String;
 implementation
 
 {$R *.dfm}
 
-procedure TMainForm.btn1Click(Sender: TObject);
-begin
-   //GETMontadoras();
-
-   end;
 
 procedure TMainForm.GETCategoria();
 var  JSONRest : string;
     JsonObject : UJSONObject;
-    objJSON, Items, Item: TlkJSONbase;
+    objJSON, Items: TlkJSONbase;
     i : Integer;
-    Lista_Eventos : TListItem;
+
 begin
 
   JsonObject := UJSONObject.Create;
@@ -86,7 +75,7 @@ begin
 
   for i :=0 to JsonObject.categoria.Count-1 do
   begin
-    Item := JsonObject.categoria.Child[0];
+    //Item := JsonObject.categoria.Child[0];
     Items := JsonObject.categoria.Child[i];
     cbb1.Items.Add(Items.Value);
 
@@ -97,7 +86,7 @@ end;
 procedure TMainForm.GETMontadoras();
 var categoria, url, jsonGet: String;
     objJSONMontadoras, ItemsMontadora, nomeMontadora, idMontadora: TlkJSONbase;
-    i,j : Integer;
+    j : Integer;
     ListaMontadoras : TListItem;
 begin
 
@@ -120,41 +109,6 @@ begin
 
 end;
 
-procedure TMainForm.GETVeiculos();
-var categoria, url, jsonGet, idVeiculo : String;
-    objJSONMontadoras,objJSONVeiculo, ItemsMontadora, idListVeiculo: TlkJSONbase;
-    i,j : Integer;
-begin
-
-  url := 'http://service.tecnomotor.com.br/iRasther/montadora?pm.platform=1&pm.version=23&pm.type=';
-  categoria := cbb1.text;
-
-  jsonGet := idhtp1.Get(url+categoria);
-  objJSONMontadoras := TlkJSON.ParseText(jsonGet);
-
-  for i :=0 to objJSONMontadoras.Count -1 do
-  begin
-    ItemsMontadora := objJSONMontadoras.Child[i];
-    idListVeiculo := ItemsMontadora.Field['id'];
-    idVeiculo := idListVeiculo.Value;
-
-    //lst2.Items.Add(nomeMontadora.Value);
-    {
-      for j:= 0 to lst1.items.count -1 do
-      begin
-
-        if(lst1.Items.Strings[j] <> '' )then
-        begin
-          pnl1.Caption := lst1.Items.Strings[lst1.ItemIndex];
-          lst1.Repaint;
-        end;
-      end;
-      }
-
-  end;
-
-end;
-
 procedure TMainForm.FormShow(Sender: TObject);
 var
   JsonObject : UJSONObject;
@@ -164,92 +118,6 @@ begin
 
 end;
 
-procedure TMainForm.lst1Click(Sender: TObject);
-var i: Integer;
-     url, categoria, jsonGet : String;
-    objJSONVeiculos, ItemsVeiculos, nomeVeiculo, idVeiculo: TlkJSONbase;
-    ListaVeiculos : TListItem;
-begin
-
-    lbl3.Visible := True;
-    lvVeiculos.Visible := True;
-
-    categoria := cbb1.text;
-    lvVeiculos.Clear;
-    url := 'http://service.tecnomotor.com.br/iRasther/veiculo?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+IdMontadoraNovo;
-
-    jsonGet := idhtp1.Get(url);
-    objJSONVeiculos := TlkJSON.ParseText(jsonGet);
-
-         // EXEMPLO DE ADIÇÃO NA LISTA
-       {
-         ListaMontadoras := ListView1.Items.Add;
-      ListaMontadoras.Caption := idMontadora.Value;
-      ListaMontadoras.SubItems.Add(nomeMontadora.Value);
-
-      ListaIdMontadora.Add(VarToStr(nomeMontadora.Value));
-       }
-
-    for i :=0 to objJSONVeiculos.Count -1 do
-    begin
-
-      ItemsVeiculos := objJSONVeiculos.Child[i];
-      nomeVeiculo := ItemsVeiculos.Field['nome'];
-      idVeiculo := ItemsVeiculos.Field['id'];
-      ListaVeiculos := lvVeiculos.Items.Add;
-      ListaVeiculos.Caption := idVeiculo.Value;
-      ListaVeiculos.SubItems.Add(nomeVeiculo.Value);
-
-    end;
-
-end;
-
-procedure TMainForm.SetCategoria(url: String);
-var
-  JsonObject : UJSONObject;
-  objJSON, Items, Item: TlkJSONbase;
-  JSONRest, Categoria : String;
-begin
-
-  JsonObject := UJSONObject.Create;
-  JSONRest := idhtp1.Get(url);
-  objJSON := TlkJSON.ParseText(JSONRest);
-  JsonObject.categoria := objJSON;
-
-
-end;
-
-procedure TMainForm.btn2Click(Sender: TObject);
-var
-  Lista_Eventos : TListItem;
-begin
-  {
-    ds2.Insert;
-     ds2.FieldByName('ID').AsString := idMontadora.Value;
-     ds2.FieldByName('Nome').AsString := nomeMontadora.Value;
-     ds2.Post;
-      }
-
-      {
-      for j :=0 to ListaIdMontadora.Count -1  do
-      begin
-
-         ShowMessage(ListaIdMontadora.Strings[j]);
-      end;
-       }
-        //ShowMessage(IntToStr(ListaIdMontadora.IndexOf('VW')));
-        Lista_Eventos := lvMontadoras.Items.Add;
-     //ListView1.Columns.Items[0].Caption := 'ID';
-     //ListView1.Columns.Items[1].Caption := 'Nome';
-     //ListView1.Columns.Items[2].Caption := 'col 2';
-
-     Lista_Eventos.Caption := ' 29';
-      Lista_Eventos.Caption := ' 30';
-     //Lista_Eventos.SubItems.Add('29');
-     Lista_Eventos.SubItems.Add('ALFA ROMEO');
-      Lista_Eventos.SubItems.Add('VW');
-                                                                   
-end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -259,11 +127,46 @@ end;
 procedure TMainForm.lvMontadorasSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
   var
-     indexteste : String;
+  i: Integer;
+     url, categoria, jsonGet : String;
+    objJSONVeiculos, ItemsVeiculos, nomeVeiculo, idVeiculo: TlkJSONbase;
+    ListaVeiculos : TListItem;
 begin
+
+   if(lvMotorizacao.Visible = True)then
+  begin
+    lbl4.Visible := False;
+    lvMotorizacao.Visible := False;
+    lbl5.Visible := False;
+    lvTipoSistemas.Visible := False;
+    lbl6.Visible := False;
+    lvSistemas.Visible := False;
+  end;
+
   IdMontadoraNovo := Item.Caption;
-  //pnl1.Caption := IdMontadoraNovo;
-  lst1Click(Sender);
+  nomeMontadoraStatus := Item.SubItems.Text;
+  lbl3.Visible := True;
+  lvVeiculos.Visible := True;
+
+  categoria := cbb1.text;
+  lvVeiculos.Clear;
+  url := 'http://service.tecnomotor.com.br/iRasther/veiculo?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+IdMontadoraNovo;
+
+  jsonGet := idhtp1.Get(url);
+  objJSONVeiculos := TlkJSON.ParseText(jsonGet);
+
+  for i :=0 to objJSONVeiculos.Count -1 do
+  begin
+
+    ItemsVeiculos := objJSONVeiculos.Child[i];
+    nomeVeiculo := ItemsVeiculos.Field['nome'];
+    idVeiculo := ItemsVeiculos.Field['id'];
+    ListaVeiculos := lvVeiculos.Items.Add;
+    ListaVeiculos.Caption := idVeiculo.Value;
+    ListaVeiculos.SubItems.Add(nomeVeiculo.Value);
+
+  end;
+   edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus;
 end;
 
 procedure TMainForm.lvVeiculosSelectItem(Sender: TObject; Item: TListItem;
@@ -274,9 +177,16 @@ procedure TMainForm.lvVeiculosSelectItem(Sender: TObject; Item: TListItem;
     objJSONMotorizacao, ItemsMotorizacao, nomeMotorizacao, idMotorizacao: TlkJSONbase;
     ListaMotorizacao : TListItem;
 begin
-  idVeiculoString := Item.Caption;
-  pnl2.Caption := idVeiculoString;
+    if(lvTipoSistemas.Visible = True)then
+    begin
+      lbl5.Visible := False;
+      lvTipoSistemas.Visible := False;
+      lbl6.Visible := False;
+      lvSistemas.Visible := False;
+    end;
 
+    idVeiculoString := Item.Caption;
+    nomeVeiculoStatus := Item.SubItems.Text;
     lbl4.Visible := True;
     lvMotorizacao.Visible := True;
 
@@ -298,7 +208,7 @@ begin
       ListaMotorizacao.SubItems.Add(nomeMotorizacao.Value);
 
     end;
-
+    edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus;
 
 
 end;
@@ -309,10 +219,19 @@ begin
 
   lvMontadoras.Clear;
   lvVeiculos.Clear;
+  lbl3.Visible := False;
+  lvVeiculos.Visible := False;
   lvMotorizacao.Clear;
+  lbl4.Visible := False;
+  lvMotorizacao.Visible := False;
   lvTipoSistemas.Clear;
+  lbl5.Visible := False;
+  lvTipoSistemas.Visible := False;
+  lvSistemas.Clear;
+  lbl6.Visible := False;
+  lvSistemas.Visible := False;
   GETMontadoras();
-  //ShowMessage(cbb1.Text);
+
 end;
 
 procedure TMainForm.lvMotorizacaoSelectItem(Sender: TObject;
@@ -323,9 +242,14 @@ procedure TMainForm.lvMotorizacaoSelectItem(Sender: TObject;
     objJSONTipoSistemas, ItemsTipoSistemas, nomeTipoSistema, idTipoSistemas: TlkJSONbase;
     ListaTipoSistemas : TListItem;
 begin
-  idMotorizacaoString := Item.Caption;
-  pnl1.Caption := idMotorizacaoString;
+     if(lvSistemas.Visible = True)then
+     begin
+      lbl6.Visible := False;
+      lvSistemas.Visible := False;
+     end;
 
+    idMotorizacaoString := Item.Caption;
+    nomeMotorizacaoStatus := Item.SubItems.Text;
     lbl5.Visible := True;
     lvTipoSistemas.Visible := True;
     categoria := cbb1.text;
@@ -348,8 +272,7 @@ begin
       ListaTipoSistemas.SubItems.Add(nomeTipoSistema.Value);
 
     end;
-
-     //ShowMessage(url);
+    edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus + '/' + nomeMotorizacaoStatus;
 
 end;
 
@@ -362,13 +285,14 @@ var
     ListaSistemas : TListItem;
 begin
   idTipoSistemasString := Item.Caption;
+  nomeTipoSistemasStatus := Item.SubItems.Text;
 
   lbl6.Visible := True;
   lvSistemas.Visible := True;
   categoria := cbb1.text;
   lvSistemas.Clear;
 
-  //url := 'http://service.tecnomotor.com.br/iRasther/tiposistema?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+IdMontadoraNovo+'&pm.vehicles='+idVeiculoString+'&pm.engines='+idMotorizacaoString;
+  
     url := 'http://service.tecnomotor.com.br/iRasther/sistema?pm.platform=1&pm.version=23&pm.type='+categoria+'&pm.assemblers='+idMontadoraNovo+'&pm.vehicles='+idVeiculoString+'&pm.engines='+idMotorizacaoString+'&pm.typeOfSystems='+idTipoSistemasString;
 
     jsonGet := idhtp1.Get(url);
@@ -386,6 +310,15 @@ begin
       ListaSistemas.SubItems.Add(nomeSistema.Value);
 
     end;
+
+    edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus + '/' + nomeMotorizacaoStatus + '/' + nomeTipoSistemasStatus;
+end;
+
+procedure TMainForm.lvSistemasSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+  nomeSistemasStatus := Item.SubItems.Text;
+  edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus + '/' + nomeMotorizacaoStatus + '/' + nomeTipoSistemasStatus + '/' + nomeSistemasStatus;
 end;
 
 end.

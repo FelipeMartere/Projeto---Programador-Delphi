@@ -1,9 +1,9 @@
 object MainForm: TMainForm
-  Left = 1940
-  Top = 81
-  Width = 1278
-  Height = 718
-  Caption = 'i'
+  Left = 1996
+  Top = 65
+  Width = 1310
+  Height = 701
+  Caption = ' Tabela de Aplica'#231#227'o- Rasther'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -107,39 +107,6 @@ object MainForm: TMainForm
     TabOrder = 0
     OnChange = cbb1Change
   end
-  object pnl1: TPanel
-    Left = 336
-    Top = 40
-    Width = 185
-    Height = 41
-    Caption = 'pnl1'
-    TabOrder = 1
-  end
-  object pnl2: TPanel
-    Left = 536
-    Top = 40
-    Width = 185
-    Height = 41
-    Caption = 'pnl2'
-    TabOrder = 2
-  end
-  object btn2: TButton
-    Left = 1152
-    Top = 48
-    Width = 75
-    Height = 25
-    Caption = 'Enviar Tabela'
-    TabOrder = 3
-    OnClick = btn2Click
-  end
-  object pnl3: TPanel
-    Left = 752
-    Top = 40
-    Width = 185
-    Height = 41
-    Caption = 'pnl3'
-    TabOrder = 4
-  end
   object lvMontadoras: TListView
     Left = 8
     Top = 160
@@ -155,7 +122,7 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 5
+    TabOrder = 1
     ViewStyle = vsReport
     OnSelectItem = lvMontadorasSelectItem
   end
@@ -174,7 +141,7 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 6
+    TabOrder = 2
     ViewStyle = vsReport
     Visible = False
     OnSelectItem = lvVeiculosSelectItem
@@ -194,7 +161,7 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 7
+    TabOrder = 3
     ViewStyle = vsReport
     Visible = False
     OnSelectItem = lvMotorizacaoSelectItem
@@ -214,7 +181,7 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 8
+    TabOrder = 4
     ViewStyle = vsReport
     Visible = False
     OnSelectItem = lvTipoSistemasSelectItem
@@ -234,9 +201,17 @@ object MainForm: TMainForm
       end>
     ColumnClick = False
     RowSelect = True
-    TabOrder = 9
+    TabOrder = 5
     ViewStyle = vsReport
     Visible = False
+    OnSelectItem = lvSistemasSelectItem
+  end
+  object edt1: TEdit
+    Left = 464
+    Top = 16
+    Width = 409
+    Height = 21
+    TabOrder = 6
   end
   object idhtp1: TIdHTTP
     MaxLineAction = maException
