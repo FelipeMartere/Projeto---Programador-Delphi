@@ -24,6 +24,10 @@ type
     lvSistemas: TListView;
     lbl6: TLabel;
     edt1: TEdit;
+    MainMenu1: TMainMenu;
+    Arquivo1: TMenuItem;
+    Sobre1: TMenuItem;
+    NovaConsulta1: TMenuItem;
     procedure GETCategoria();
     procedure GETMontadoras();
     procedure FormShow(Sender: TObject);
@@ -37,6 +41,12 @@ type
       Selected: Boolean);
     procedure lvTipoSistemasSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure lvSistemasSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    
+    procedure Sobre1Click(Sender: TObject);
+    procedure NovaConsulta1Click(Sender: TObject);
+   
 
   private
     { Private declarations }
@@ -310,6 +320,24 @@ begin
     end;
 
     edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus + '/' + nomeMotorizacaoStatus + '/' + nomeTipoSistemasStatus;
+end;
+
+procedure TMainForm.lvSistemasSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+  nomeSistemasStatus := Item.SubItems.Text;
+  edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus + '/' + nomeMotorizacaoStatus + '/' + nomeTipoSistemasStatus + '/' + nomeSistemasStatus;
+end;
+
+
+procedure TMainForm.Sobre1Click(Sender: TObject);
+begin
+  ShowMessage('Entrou no Sobre');
+end;
+
+procedure TMainForm.NovaConsulta1Click(Sender: TObject);
+begin
+ ShowMessage('Entrou na Nova Consulta');
 end;
 
 end.

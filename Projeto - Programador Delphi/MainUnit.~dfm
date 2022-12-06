@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 1996
-  Top = 65
+  Left = 1989
+  Top = 66
   Width = 1310
   Height = 701
   Caption = ' Tabela de Aplica'#231#227'o- Rasther'
@@ -10,6 +10,7 @@ object MainForm: TMainForm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  Menu = MainMenu1
   OldCreateOrder = False
   OnClose = FormClose
   OnShow = FormShow
@@ -17,7 +18,7 @@ object MainForm: TMainForm
   TextHeight = 13
   object lbl1: TLabel
     Left = 72
-    Top = 16
+    Top = 62
     Width = 236
     Height = 24
     Caption = 'Escolha uma das categorias'
@@ -99,7 +100,7 @@ object MainForm: TMainForm
   end
   object cbb1: TComboBox
     Left = 72
-    Top = 56
+    Top = 102
     Width = 225
     Height = 21
     ItemHeight = 13
@@ -204,14 +205,14 @@ object MainForm: TMainForm
     TabOrder = 5
     ViewStyle = vsReport
     Visible = False
+    OnSelectItem = lvSistemasSelectItem
   end
   object edt1: TEdit
-    Left = 464
-    Top = 16
-    Width = 297
+    Left = 488
+    Top = 88
+    Width = 409
     Height = 21
     TabOrder = 6
-    Text = 'edt1'
   end
   object idhtp1: TIdHTTP
     MaxLineAction = maException
@@ -227,7 +228,22 @@ object MainForm: TMainForm
     Request.BasicAuthentication = False
     Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
     HTTPOptions = [hoForceEncodeParams]
-    Left = 16
+    Left = 1248
     Top = 8
+  end
+  object MainMenu1: TMainMenu
+    Left = 304
+    Top = 16
+    object Arquivo1: TMenuItem
+      Caption = '&Arquivo'
+      object NovaConsulta1: TMenuItem
+        Caption = 'Nova Consulta'
+        OnClick = NovaConsulta1Click
+      end
+    end
+    object Sobre1: TMenuItem
+      Caption = '&Sobre'
+      OnClick = Sobre1Click
+    end
   end
 end

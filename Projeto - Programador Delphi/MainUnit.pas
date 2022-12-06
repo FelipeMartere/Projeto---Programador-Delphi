@@ -24,6 +24,11 @@ type
     lvSistemas: TListView;
     lbl6: TLabel;
     edt1: TEdit;
+    MainMenu1: TMainMenu;
+    Arquivo1: TMenuItem;
+    Sobre1: TMenuItem;
+    NovaConsulta1: TMenuItem;
+    pnl1: TPanel;
     procedure GETCategoria();
     procedure GETMontadoras();
     procedure FormShow(Sender: TObject);
@@ -39,6 +44,10 @@ type
       Selected: Boolean);
     procedure lvSistemasSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    
+    procedure Sobre1Click(Sender: TObject);
+    procedure NovaConsulta1Click(Sender: TObject);
+   
 
   private
     { Private declarations }
@@ -115,7 +124,7 @@ var
 begin
 
   GETCategoria();
-
+  edt1.Text := cbb1.Text;
 end;
 
 
@@ -132,6 +141,10 @@ procedure TMainForm.lvMontadorasSelectItem(Sender: TObject; Item: TListItem;
     objJSONVeiculos, ItemsVeiculos, nomeVeiculo, idVeiculo: TlkJSONbase;
     ListaVeiculos : TListItem;
 begin
+   if(pnl1.Visible = True)then
+   begin
+    pnl1.Visible := False;
+   end;
 
    if(lvMotorizacao.Visible = True)then
   begin
@@ -232,6 +245,30 @@ begin
   lvSistemas.Visible := False;
   GETMontadoras();
 
+  if(cbb1.Text <> '')then
+  begin
+    pnl1.Visible := False;
+    lbl2.Visible := True;
+    lvMontadoras.Visible := True;
+  end;
+
+   if(lvMontadoras.Visible = True)then
+ begin
+    lbl2.Visible := False;
+    lvMontadoras.Visible := False;
+    lbl4.Visible := False;
+    lvMotorizacao.Visible := False;
+    lbl5.Visible := False;
+    lvTipoSistemas.Visible := False;
+    lbl6.Visible := False;
+    lvSistemas.Visible := False;
+ end
+ else
+ begin
+    lbl2.Visible := True;
+    lvMontadoras.Visible := True;
+ end;
+
 end;
 
 procedure TMainForm.lvMotorizacaoSelectItem(Sender: TObject;
@@ -319,6 +356,39 @@ procedure TMainForm.lvSistemasSelectItem(Sender: TObject; Item: TListItem;
 begin
   nomeSistemasStatus := Item.SubItems.Text;
   edt1.Text := cbb1.Text + '/' + nomeMontadoraStatus + '/' + nomeVeiculoStatus + '/' + nomeMotorizacaoStatus + '/' + nomeTipoSistemasStatus + '/' + nomeSistemasStatus;
+end;
+
+
+procedure TMainForm.Sobre1Click(Sender: TObject);
+begin
+  ShowMessage('Entrou no Sobre');
+end;
+
+procedure TMainForm.NovaConsulta1Click(Sender: TObject);
+begin
+ //ShowMessage('Entrou na Nova Consulta');
+ pnl1.Visible := True;
+
+ if(lvMontadoras.Visible = True)then
+ begin
+    lbl2.Visible := False;
+    lvMontadoras.Visible := False;
+    lbl3.Visible := False;
+    lvVeiculos.Visible := False;
+    lbl4.Visible := False;
+    lvMotorizacao.Visible := False;
+    lbl5.Visible := False;
+    lvTipoSistemas.Visible := False;
+    lbl6.Visible := False;
+    lvSistemas.Visible := False;
+ end
+ else
+ begin
+    lbl2.Visible := True;
+    lvMontadoras.Visible := True;
+ end;
+
+
 end;
 
 end.
