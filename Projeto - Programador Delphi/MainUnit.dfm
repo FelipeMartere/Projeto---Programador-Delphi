@@ -1,8 +1,8 @@
 object MainForm: TMainForm
-  Left = 1989
-  Top = 66
-  Width = 1310
-  Height = 701
+  Left = 2062
+  Top = 117
+  Width = 1258
+  Height = 762
   Caption = ' Tabela de Aplica'#231#227'o- Rasther'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -85,6 +85,53 @@ object MainForm: TMainForm
     Font.Style = []
     ParentFont = False
     Visible = False
+  end
+  object SobrePanel: TPanel
+    Left = 410
+    Top = 160
+    Width = 473
+    Height = 361
+    Color = cl3DLight
+    TabOrder = 7
+    Visible = False
+    OnClick = SobrePanelClick
+    object lbl7: TLabel
+      Left = 112
+      Top = 128
+      Width = 278
+      Height = 72
+      Caption = 
+        '                                          '#13#10'Projeto desenvolvido' +
+        ' como teste.'#13#10'Vers'#227'o: 1.0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lbl8: TLabel
+      Left = 112
+      Top = 24
+      Width = 253
+      Height = 24
+      Caption = 'Tabela de Aplica'#231#227'o - Rasther'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object btn1: TButton
+      Left = 200
+      Top = 304
+      Width = 75
+      Height = 25
+      Caption = 'OK'
+      TabOrder = 0
+      OnClick = btn1Click
+    end
   end
   object lvMontadoras: TListView
     Left = 8
@@ -186,24 +233,24 @@ object MainForm: TMainForm
     Visible = False
     OnSelectItem = lvSistemasSelectItem
   end
-  object edt1: TEdit
-    Left = 488
-    Top = 88
-    Width = 409
-    Height = 21
-    TabOrder = 5
-    Visible = False
+  object stat1: TStatusBar
+    Left = 0
+    Top = 684
+    Width = 1242
+    Height = 19
+    Panels = <>
   end
-  object pnl1: TPanel
-    Left = 432
-    Top = 160
-    Width = 433
-    Height = 305
+  object MainPanel: TPanel
+    Left = 408
+    Top = 137
+    Width = 473
+    Height = 361
+    Color = cl3DLight
     TabOrder = 6
     Visible = False
     object lbl1: TLabel
-      Left = 88
-      Top = 38
+      Left = 125
+      Top = 80
       Width = 236
       Height = 24
       Caption = 'Escolha uma das categorias'
@@ -215,10 +262,11 @@ object MainForm: TMainForm
       ParentFont = False
     end
     object cbb1: TComboBox
-      Left = 96
-      Top = 126
+      Left = 128
+      Top = 120
       Width = 225
       Height = 21
+      Color = cl3DLight
       ItemHeight = 13
       MaxLength = 50
       TabOrder = 0
@@ -239,22 +287,22 @@ object MainForm: TMainForm
     Request.BasicAuthentication = False
     Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
     HTTPOptions = [hoForceEncodeParams]
-    Left = 1248
+    Left = 1192
     Top = 8
   end
   object MainMenu1: TMainMenu
-    Left = 304
-    Top = 16
-    object Arquivo1: TMenuItem
-      Caption = '&Arquivo'
-      object NovaConsulta1: TMenuItem
+    Left = 1120
+    Top = 24
+    object A1: TMenuItem
+      Caption = 'Arquivo'
+      object N1: TMenuItem
         Caption = 'Nova Consulta'
-        OnClick = NovaConsulta1Click
+        OnClick = N1Click
       end
     end
-    object Sobre1: TMenuItem
-      Caption = '&Sobre'
-      OnClick = Sobre1Click
+    object S1: TMenuItem
+      Caption = 'Sobre'
+      OnClick = S1Click
     end
   end
 end
